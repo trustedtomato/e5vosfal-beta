@@ -1,31 +1,60 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <header class="main-header">
+      <h2><router-link to="/">E5vosfal</router-link></h2>
+      <div>
+        <input type="search" placeholder="Search" aria-label="Search">
+      </div>
+      <router-link to="/account">Account</router-link>
+      <a href="/signout">Sign out</a>
+    </header>
     <router-view/>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
+:root {
+  --main-hue: 180;
+  --accent-hue: 0;
+  --color-dark: hsl(var(--main-hue), 100%, 15%);
+  --color-text-light: hsl(var(--main-hue), 100%, 95%);
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+a {
+  color: inherit;
+}
+
+.main-header {
+  display: flex;
+  align-items: baseline;
+  padding: 24px;
+  background-color: var(--color-dark);
+  color: var(--color-text-light);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+input {
+  border-radius: 4px;
+  border: 0;
+  padding: 8px;
+}
+
+.main-header h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.main-header > * {
+  margin-right: 16px;
+}
+
+.main-header a {
+  text-decoration: none;
 }
 </style>
