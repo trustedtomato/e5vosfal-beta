@@ -5,10 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": "nodemon --exec 'vue-cli-service serve'",
+    "start": "npm run build && NODE_ENV=production node src/server/server.js"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "core-js": "^2.6.5",
+    "express": "^4.17.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3"
   },
@@ -20,6 +24,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "nodemon": "^1.19.2",
     "vue-template-compiler": "^2.6.10"
   }
 }
