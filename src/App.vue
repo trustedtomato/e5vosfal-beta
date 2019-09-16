@@ -23,7 +23,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 a {
@@ -43,6 +44,7 @@ input {
   border-radius: 4px;
   border: 0;
   padding: 8px;
+  font-family: inherit;
 }
 
 .main-header h2 {
@@ -58,3 +60,9 @@ input {
   text-decoration: none;
 }
 </style>
+
+<script>
+export default {
+  name: 'app',
+};
+</script>
