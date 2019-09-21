@@ -10,7 +10,7 @@ const { PORT = 3000 } = process.env;
 configureAPI(app);
 
 // UI
-const publicPath = resolve(__dirname, '../../dist');
+const publicPath = resolve(__dirname, '../dist');
 const staticConf = { maxAge: '1y', etag: false };
 
 app.use(express.static(publicPath, staticConf));
