@@ -56,9 +56,11 @@ export default {
         return;
       }
       try {
-        const { jwt } = await fetchApi(this.gapiCodeEndpoint, { code });
-        console.log('Dispatch currentUser/setJwt', jwt);
-        this.$store.dispatch('currentUser/setJwt', jwt);
+        const { jwt, hasuraJwt } = await fetchApi(this.gapiCodeEndpoint, { code });
+        this.$store.dispatch('currentUser/login', {
+          jwt,
+          hasuraJwt,
+        });
       } catch (err) {
         console.error(err);
       }

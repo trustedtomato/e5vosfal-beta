@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
 
   // Find existing user.
   let user = await db.queryOne(sql`
-    SELECT email, given_name, family_name, middle_name, avatar_url
+    SELECT id, email, given_name, family_name, middle_name, avatar_url
     FROM "user"
     WHERE google_id=${googleProfile.sub}
     LIMIT 1
@@ -86,15 +86,33 @@ router.post('/login', async (req, res) => {
         ${refreshToken},
         ${googleProfile.picture}
       )
-      RETURNING email, given_name, family_name, middle_name, avatar_url
+      RETURNING id, email, given_name, family_name, middle_name, avatar_url
     `);
     console.log(`Registered user ${user.email}`);
   }
 
   console.log(`Logged in user ${user.email}`);
 
+  // Create JWTs
+  const siteJwt = jwt.sign(user, process.env.JWT_SECRET);
+  const hasuraJwt = jwt.sign(
+    {
+      'https://hasura.io/jwt/claims': {
+        'x-hasura-allowed-roles': ['user'],
+        'x-hasura-default-role': 'user',
+        'x-hasura-user-id': `${user.id}`,
+      },
+    },
+    process.env.HASURA_JWT_SECRET,
+    {
+      noTimestamp: true,
+    },
+  );
+
+  // Send JWTs
   res.json({
-    jwt: jwt.sign(user, process.env.JWT_SECRET),
+    jwt: siteJwt,
+    hasuraJwt,
   });
 });
 

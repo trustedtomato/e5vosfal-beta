@@ -1,15 +1,37 @@
 <template>
   <main>
-    <h1>Title of {{ $route.params.id }}</h1>
+    <h1>{{post[0].summary}}</h1>
     <div>
-      Description of {{ $route.params.id }}.
+      {{post[0].details}}
     </div>
   </main>
 </template>
 
 <script>
+import gql from 'graphql-tag';
+
 export default {
   name: 'post',
+  computed: {
+    id() {
+      return parseInt(this.$route.params.id, 10);
+    },
+  },
+  apollo: {
+    post: {
+      query: gql`query GetPost($id: Int!) {
+        post(where: {id: {_eq: $id}}) {
+          summary,
+          details
+        }
+      }`,
+      variables() {
+        return {
+          id: this.id,
+        };
+      },
+    },
+  },
 };
 </script>
 

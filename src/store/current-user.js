@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const state = {
   jwt: null,
+  hasuraJwt: null,
 };
 
 const getters = {
@@ -14,8 +15,13 @@ const getters = {
 };
 
 const actions = {
-  setJwt({ commit }, token) {
-    commit('setJwt', token);
+  login({ commit }, { jwt: token, hasuraJwt }) {
+    if (token) {
+      commit('setJwt', token);
+    }
+    if (hasuraJwt) {
+      commit('setHasuraJwt', hasuraJwt);
+    }
   },
 };
 
@@ -23,6 +29,10 @@ const mutations = {
   setJwt(_state, token) {
     // eslint-disable-next-line no-param-reassign
     _state.jwt = token;
+  },
+  setHasuraJwt(_state, hasuraJwt) {
+    // eslint-disable-next-line no-param-reassign
+    _state.hasuraJwt = hasuraJwt;
   },
   logout(_state) {
     // eslint-disable-next-line no-param-reassign
