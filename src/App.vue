@@ -12,7 +12,7 @@
   --body-font: "Source Sans Pro";
   --display-font: "Oswald";
   --color-dark: hsl(var(--main-hue), 100%, 15%);
-  --color-light: hsl(var(--main-hue), 100%, 95%);
+  --color-light: hsl(var(--main-hue), 100%, 98%);
   --color-accent-light: hsl(var(--accent-hue), 100%, 15%);
 }
 
@@ -20,14 +20,37 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: var(--body-font);
+  line-height: 1.5;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  margin: 16px;
+  flex-grow: 1;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 a {
   color: inherit;
+}
+
+button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styleless-a {
+  text-decoration: none;
 }
 </style>
 

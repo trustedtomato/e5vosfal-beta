@@ -1,8 +1,13 @@
 <template>
   <main>
-    <h1>{{post[0].summary}}</h1>
-    <div>
-      {{post[0].details}}
+    <div v-if="!$apollo.loading">
+      <h1>{{post[0].summary}}</h1>
+      <div>
+        {{post[0].details}}
+      </div>
+    </div>
+    <div v-else>
+      Loading...
     </div>
   </main>
 </template>
