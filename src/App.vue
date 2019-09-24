@@ -16,11 +16,22 @@
   --color-accent-light: hsl(var(--accent-hue), 100%, 15%);
 }
 
-html, body {
+body, h1, h2, h3, h4, h5, h6 {
+  font-size-adjust: 0.5;
+}
+
+body {
   margin: 0;
   padding: 0;
   font-family: var(--body-font);
-  line-height: 1.5;
+  line-height: 1.25;
+}
+
+
+@media (min-width: 43.75em) {
+  body {
+    line-height: 1.375;
+  }
 }
 
 html, body, #app {

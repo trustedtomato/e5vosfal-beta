@@ -1,6 +1,15 @@
 <template>
   <header>
-    <h2><router-link to="/">E5vösfal</router-link></h2>
+    <h2><router-link to="/">
+      <span class="potencial-abbreviation">
+        <span class="full">
+          SchoolWall
+        </span>
+        <span class="abbr">
+          SW
+        </span>
+      </span>
+    </router-link></h2>
     <div class="search">
       <input class="search__input" type="search" placeholder="Search" aria-label="Search">
     </div>
@@ -39,6 +48,19 @@
 </template>
 
 <style scoped>
+.potencial-abbreviation > .full{
+  display: none;
+}
+
+@media screen and (min-width: 36em) {
+  .potencial-abbreviation > .abbr {
+    display: none;
+  }
+  .potencial-abbreviation > .full {
+    display: block;
+  }
+}
+
 header {
   display: flex;
   align-items: center;
