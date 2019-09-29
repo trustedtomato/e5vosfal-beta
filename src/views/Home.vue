@@ -58,7 +58,7 @@ export default {
   }
 
   .posts {
-    max-width: 34em;
+    width: 34em;
   }
 
   .suggestions {
