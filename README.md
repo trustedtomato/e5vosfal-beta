@@ -1,29 +1,15 @@
-# e5vosfal3
+# Schowa
 
-## Project setup
-```
-npm install
-```
+## Mi a Schowa célja?
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+A Schowa célja, hogy olyan diákközösségeknek, amiknek van diákönkormányzata, szolgáltasson módot
+- A diákok számára a közösséget érintő javaslatok közzétételére (infrastruktúrai javítás, program javaslat) - ötletek
+- A kormány számára pályázatok közzétételére, amikre a résztvevők pályázhatnak - pályázatok
+- Mindenki számára a közösséget érintő dolgok közzétételére, ez jelentheti a teljesség igénye nélkül az alábbiakat (bejelentések):
+  - program bejelentés
+  - szakkör bejelentés
+  - suliújság link
+  - cipőgyűjtés a rászorulók részére
+  - kimittud felvétel
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Ebből a háromból (ötletek, pályázatok, bejelentések) áll a Schowa.
