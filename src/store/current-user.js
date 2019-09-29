@@ -23,6 +23,9 @@ const actions = {
       commit('setHasuraJwt', hasuraJwt);
     }
   },
+  logout({ commit }) {
+    commit('logout');
+  },
 };
 
 const mutations = {

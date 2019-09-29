@@ -1,19 +1,16 @@
 <template>
   <main>
-    <div v-if="!$apollo.loading">
-      <h1>{{post[0].summary}}</h1>
+    <div v-if="post">
+      <h1>{{post.summary}}</h1>
       <div>
-        {{post[0].details}}
+        {{post.details}}
       </div>
-    </div>
-    <div v-else>
-      Loading...
     </div>
   </main>
 </template>
 
 <script>
-import gql from 'graphql-tag';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'post',
@@ -21,21 +18,17 @@ export default {
     id() {
       return parseInt(this.$route.params.id, 10);
     },
-  },
-  apollo: {
-    post: {
-      query: gql`query GetPost($id: Int!) {
-        post(where: {id: {_eq: $id}}) {
-          summary,
-          details
-        }
-      }`,
-      variables() {
-        return {
-          id: this.id,
-        };
-      },
+    post() {
+      return this.$store.getters['posts/getById'](this.id);
     },
+  },
+  methods: {
+    ...mapActions({
+      fetchPost: 'posts/fetchPost',
+    }),
+  },
+  created() {
+    this.fetchPost(this.id);
   },
 };
 </script>

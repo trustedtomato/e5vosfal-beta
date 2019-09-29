@@ -1,12 +1,8 @@
-import Vue from 'vue';
-import VueApollo from 'vue-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import store from './store';
-
-Vue.use(VueApollo);
 
 const httpLink = new HttpLink({
   uri: 'https://e5vosfal-graphql.herokuapp.com/v1/graphql',
@@ -28,10 +24,12 @@ const apolloClient = new ApolloClient({
   // You should use an absolute URL here
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  },
 });
 
-const apolloProvider = new VueApollo({
-  defaultClient: apolloClient,
-});
-
-export default apolloProvider;
+export default apolloClient;
