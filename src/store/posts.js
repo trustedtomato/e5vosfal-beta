@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import * as R from 'ramda';
 import apolloClient from '../apollo-client';
+import router from '../router';
 
 const normalizePost = ({
   id,
@@ -167,6 +168,26 @@ const actions = {
         isUpvoted: isUpvote,
       });
     }
+  },
+  async submitPost(_, { summary, details }) {
+    const { data } = await apolloClient.mutate({
+      mutation: gql`
+          mutation SubmitPost($summary: String!, $details: String) {
+            insert_post(objects: {summary: $summary, details: $details}) {
+              returning {
+                id
+              }
+            }
+          }
+      `,
+      variables: {
+        summary,
+        details,
+      },
+    });
+    const { id } = data.insert_post.returning[0];
+    console.log(id);
+    router.push(`/post/${id}`);
   },
 };
 

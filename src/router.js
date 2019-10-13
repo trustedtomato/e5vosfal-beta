@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import metadata from './store/metadata';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -31,5 +32,17 @@ export default new Router({
       name: 'settings',
       component: () => import(/* webpackChunkName: "account" */ './views/Settings.vue'),
     },
+    {
+      path: '/submit',
+      name: 'submit',
+      component: () => import(/* webpackChunkName: "account" */ './views/Submit.vue'),
+    },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  document.title = metadata.state.name;
+  next();
+});
+
+export default router;

@@ -6,6 +6,7 @@
 
 <style module>
   .button {
+    color: inherit;
     background: none;
     border: 0;
     padding: 0;

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import currentUser from './current-user';
 import posts from './posts';
+import metadata from './metadata';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   modules: {
     currentUser,
     posts,
+    metadata,
   },
   plugins: [vuexLocal.plugin],
   strict: debug,

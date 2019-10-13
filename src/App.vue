@@ -13,7 +13,7 @@
   --display-font: "Oswald";
   --color-dark: hsl(var(--main-hue), 100%, 15%);
   --color-light: hsl(var(--main-hue), 100%, 98%);
-  --color-accent-light: hsl(var(--accent-hue), 100%, 15%);
+  --color-accent-dark: hsl(var(--accent-hue), 100%, 15%);
 }
 
 body, h1, h2, h3, h4, h5, h6 {

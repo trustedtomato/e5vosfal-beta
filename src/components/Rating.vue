@@ -4,20 +4,14 @@
       [$style.upvote]: true,
       [$style.triggered]: post.isUpvoted === true
     }" @click.prevent.native="upvoteClick">
-      <svg viewBox="0 0 16 16" width="16" height="16">
-        <rect x="6" y="8" width="4" height="8" />
-        <polygon points="0 10, 16 10, 8 0" />
-      </svg>
+      <up-arrow />
     </invisible-button>
     {{ post.voteSum }}
     <invisible-button :class="{
       [$style.downvote]: true,
       [$style.triggered]: post.isUpvoted === false
     }" @click.prevent.native="downvoteClick">
-      <svg style="transform: rotateX(180deg)" viewBox="0 0 16 16" width="16" height="16">
-        <rect x="6" y="8" width="4" height="8" />
-        <polygon points="0 10, 16 10, 8 0" />
-      </svg>
+      <up-arrow style="transform: rotateX(180deg)" />
     </invisible-button>
   </div>
 </template>
@@ -25,6 +19,7 @@
 <script>
 import { mapActions } from 'vuex';
 import InvisibleButton from './InvisibleButton.vue';
+import UpArrow from '../assets/uparrow.svg';
 
 export default {
   props: {
@@ -56,6 +51,7 @@ export default {
   },
   components: {
     InvisibleButton,
+    UpArrow,
   },
 };
 </script>
