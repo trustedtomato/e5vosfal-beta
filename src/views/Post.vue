@@ -4,7 +4,9 @@
       <rating :id="id"></rating>
       <div :class="$style.content">
         <div :class="$style.creator">
-          Posztolta Halasi Tamás 6 perce
+          Posztolta
+          {{ post.creator.familyName }} {{ post.creator.givenName }} {{ post.creator.middleName }}
+          {{ formatRelativeTime(post.lifetimeSeconds) }}
         </div>
         <h1 :class="$style.summary">
           {{ post.summary }}
@@ -21,6 +23,7 @@
 import { mapActions } from 'vuex';
 import Card from '../components/Card.vue';
 import Rating from '../components/Rating.vue';
+import formatRelativeTime from '../utils/format-relative-time';
 
 export default {
   name: 'post',
@@ -36,6 +39,7 @@ export default {
     ...mapActions({
       fetchPost: 'posts/fetchPost',
     }),
+    formatRelativeTime,
   },
   created() {
     this.fetchPost(this.id);

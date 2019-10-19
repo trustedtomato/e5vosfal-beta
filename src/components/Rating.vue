@@ -6,7 +6,7 @@
     }" @click.prevent.native="upvoteClick">
       <up-arrow />
     </invisible-button>
-    {{ post.voteSum }}
+    {{ post.score }}
     <invisible-button :class="{
       [$style.downvote]: true,
       [$style.triggered]: post.isUpvoted === false

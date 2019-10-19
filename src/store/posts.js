@@ -7,18 +7,34 @@ const normalizePost = ({
   id,
   summary,
   details,
+  creator: {
+    given_name: givenName,
+    middle_name: middleName,
+    family_name: familyName,
+  },
+  lifetime_seconds: {
+    value: lifetimeSeconds,
+  },
   votes: [
     {
       is_upvote: isUpvoted,
     } = {},
   ] = [],
-  vote_sum: voteSum,
+  score: {
+    value: score,
+  },
 }) => ({
   id,
   summary,
   details,
   isUpvoted,
-  voteSum: (voteSum && voteSum.sum) || 0,
+  score,
+  creator: {
+    givenName,
+    middleName,
+    familyName,
+  },
+  lifetimeSeconds: Math.floor(lifetimeSeconds),
 });
 
 const state = [];
@@ -31,15 +47,23 @@ const actions = {
   async fetchPosts({ commit }) {
     const { data } = await apolloClient.query({
       query: gql`query {
-        post {
-          id,
-          summary,
-          details,
+        post(order_by: {hot_score: {value: desc}}) {
+          id
+          summary
+          details
           votes {
             is_upvote
-          },
-          vote_sum {
-            sum
+          }
+          score {
+            value
+          }
+          creator {
+            given_name
+            family_name
+            middle_name
+          }
+          lifetime_seconds {
+            value
           }
         }
       }`,
@@ -52,14 +76,22 @@ const actions = {
     const { data } = await apolloClient.query({
       query: gql`query GetPost($id: Int!) {
         post(where: {id: {_eq: $id}}) {
-          id,
-          summary,
-          details,
+          id
+          summary
+          details
           votes {
             is_upvote
           },
-          vote_sum {
-            sum
+          score {
+            value
+          }
+          creator {
+            given_name
+            family_name
+            middle_name
+          }
+          lifetime_seconds {
+            value
           }
         }
       }`,
@@ -70,29 +102,29 @@ const actions = {
     commit('addPost', data.post[0]);
   },
   async vote({ commit, state: posts }, { id, isUpvote }) {
-    const { voteSum, isUpvoted } = posts.find(R.propEq('id', id));
-    let newVoteSum = voteSum;
+    const { score, isUpvoted } = posts.find(R.propEq('id', id));
+    let newScore = score;
 
     // If the post already has the requested upvote state, return.
     if (isUpvote === isUpvoted) return;
 
     // Neutralize current state
     if (isUpvoted === true) {
-      newVoteSum -= 1;
+      newScore -= 1;
     } else if (isUpvoted === false) {
-      newVoteSum += 1;
+      newScore += 1;
     }
 
     // Set new state
     if (isUpvote === true) {
-      newVoteSum += 1;
+      newScore += 1;
     } else if (isUpvote === false) {
-      newVoteSum -= 1;
+      newScore -= 1;
     }
 
     commit('setVote', {
       id,
-      voteSum: newVoteSum,
+      score: newScore,
       isUpvoted: isUpvote,
     });
 
@@ -112,8 +144,8 @@ const actions = {
             ) {
               returning {
                 post {
-                  vote_sum {
-                    sum
+                  score {
+                    value
                   }
                 }
               }
@@ -126,11 +158,11 @@ const actions = {
         },
       });
 
-      const newSum = data.insert_post_vote.returning[0].post.vote_sum.sum;
-      if (newSum) {
+      const resultScore = data.insert_post_vote.returning[0].post.score.value;
+      if (typeof resultScore === 'number') {
         commit('setVote', {
           id,
-          voteSum: newSum,
+          score: resultScore,
           isUpvoted: isUpvote,
         });
       }
@@ -147,8 +179,8 @@ const actions = {
             ) {
               returning {
                 post {
-                  vote_sum {
-                    sum
+                  score {
+                    value
                   }
                 }
               }
@@ -160,11 +192,10 @@ const actions = {
         },
       });
 
-      const newSum = data.delete_post_vote.returning[0].post.vote_sum;
-      const newSumValue = (newSum && newSum.sum) || 0;
+      const resultScore = data.delete_post_vote.returning[0].post.score.value;
       commit('setVote', {
         id,
-        voteSum: newSumValue,
+        score: resultScore,
         isUpvoted: isUpvote,
       });
     }
@@ -206,11 +237,11 @@ const mutations = {
     );
     posts.splice(existingPostIndex, 1, newPost);
   },
-  setVote(posts, { id, voteSum, isUpvoted }) {
+  setVote(posts, { id, score, isUpvoted }) {
     const postIndex = posts.findIndex(R.propEq('id', id));
     const newPost = {
       ...posts[postIndex],
-      voteSum,
+      score,
       isUpvoted,
     };
 

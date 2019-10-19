@@ -8,7 +8,9 @@
       <rating :id="id"></rating>
       <div :class="$style.content">
         <div :class="$style.creator">
-          Posztolta Halasi Tamás 6 perce
+          Posztolta
+          {{ post.creator.familyName }} {{ post.creator.givenName }} {{ post.creator.middleName }}
+          {{ formatRelativeTime(post.lifetimeSeconds) }}
         </div>
         <h1 :class="$style.summary">
           {{ post.summary }}
@@ -24,6 +26,7 @@
 <script>
 import Card from './Card.vue';
 import Rating from './Rating.vue';
+import formatRelativeTime from '../utils/format-relative-time';
 
 export default {
   props: {
@@ -33,6 +36,9 @@ export default {
     post() {
       return this.$store.getters['posts/getById'](this.id);
     },
+  },
+  methods: {
+    formatRelativeTime,
   },
   components: {
     Card,
