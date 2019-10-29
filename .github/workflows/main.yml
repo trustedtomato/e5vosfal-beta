@@ -1,0 +1,15 @@
+name: Glitch export
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: glitch-tools/sync-glitch-github-action@master
+      name: Export to Glitch
+      env:
+        GLITCH_PROJECT_ID: ${{ secrets.BETA_GLITCH_PROJECT_ID }}
+        GLITCH_TOKEN: ${{ secrets.BETA_GLITCH_TOKEN }}
