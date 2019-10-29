@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import apolloClient from '../apollo-client';
 import router from '../router';
 
+// TODO: remove nil values
 const normalizePost = ({
   id,
   summary,
@@ -44,10 +45,15 @@ const getters = {
 };
 
 const actions = {
-  async fetchPosts({ commit }) {
+  async fetchPosts({ commit, state: posts }, { limit }) {
+    const existingIds = posts.map(post => post.id);
     const { data } = await apolloClient.query({
-      query: gql`query {
-        post(order_by: {hot_score: {value: desc}}) {
+      query: gql`query GetPosts($limit: Int!, $existingIds: [Int!]) {
+        post(
+          order_by: {hot_score: {value: desc}},
+          limit: $limit,
+          where: {id: {_nin: $existingIds}}
+        ) {
           id
           summary
           details
@@ -67,10 +73,15 @@ const actions = {
           }
         }
       }`,
+      variables: {
+        limit,
+        existingIds,
+      },
     });
     data.post.forEach((post) => {
       commit('addPost', post);
     });
+    return data.post.length;
   },
   async fetchPost({ commit }, id) {
     const { data } = await apolloClient.query({

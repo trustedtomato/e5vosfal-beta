@@ -18,7 +18,7 @@
           <div :class="$style.account__name">
             {{ user.familyName }} {{ user.middleName }} {{ user.givenName }}
           </div>
-          <div :class="$style.account__karma">1 karma</div>
+          <div :class="$style.account__karma">{{ userData.score }} karma</div>
         </div>
         <div :class="$style['account__toggle-container']">
           <svg :class="$style['account__toggle']" viewBox="0 0 20 20">
@@ -56,10 +56,13 @@ export default {
   name: 'the-header',
   computed: {
     ...mapGetters('currentUser', {
-      user: 'data',
+      user: 'jwtData',
     }),
     ...mapState('metadata', {
       title: 'name',
+    }),
+    ...mapState('currentUser', {
+      userData: 'data',
     }),
   },
   components: {
@@ -67,6 +70,9 @@ export default {
     BaseDropdown,
     InvisibleButton,
     PostLogo,
+  },
+  created() {
+    this.$store.dispatch('currentUser/subscribeToScore');
   },
 };
 </script>

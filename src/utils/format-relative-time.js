@@ -14,7 +14,7 @@ const timeNameMapping = [
 
 export default (seconds) => {
   let time = seconds;
-  let formatted = rtf.format(time, timeNameMapping[0][1]);
+  let formatted = rtf.format(-time, timeNameMapping[0][1]);
   // eslint-disable-next-line no-restricted-syntax
   for (const [divisor, timeName] of timeNameMapping.slice(1)) {
     time /= divisor;

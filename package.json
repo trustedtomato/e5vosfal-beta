@@ -9,12 +9,18 @@
     "dev": "nodemon --exec 'vue-cli-service serve'",
     "start": "npm run build && npm run serve"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "dependencies": {
     "apollo-boost": "^0.4.4",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
+    "apollo-link": "^1.2.13",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
+    "apollo-link-ws": "^1.0.19",
+    "apollo-utilities": "^1.3.2",
     "body-parser": "^1.19.0",
     "camelcase-keys": "^6.0.1",
     "core-js": "^2.6.5",
@@ -30,6 +36,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sql-tag": "^1.0.1",
+    "subscriptions-transport-ws": "^0.9.16",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.11",
     "vue-google-login": "^2.0.2",
