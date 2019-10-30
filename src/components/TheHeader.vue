@@ -35,7 +35,7 @@
           <router-link to="/settings">
             Settings
           </router-link>
-          <div>Logout</div>
+          <div @click="logout">Logout</div>
         </nav>
       </template>
     </base-dropdown>
@@ -49,7 +49,6 @@
 import { mapGetters, mapState } from 'vuex';
 import LoginButton from './LoginButton.vue';
 import BaseDropdown from './BaseDropdown.vue';
-import InvisibleButton from './InvisibleButton.vue';
 import PostLogo from '../assets/post.svg';
 
 export default {
@@ -68,8 +67,12 @@ export default {
   components: {
     LoginButton,
     BaseDropdown,
-    InvisibleButton,
     PostLogo,
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('currentUser/logout');
+    },
   },
   created() {
     this.$store.dispatch('currentUser/subscribeToScore');

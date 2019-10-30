@@ -24,6 +24,7 @@ let scoreSubscription = null;
 const actions = {
   subscribeToScore({ commit, getters: { jwtData } }) {
     if (scoreSubscription) return scoreSubscription;
+    if (!jwtData) return null;
     scoreSubscription = apolloClient.subscribe({
       query: gql`
         subscription MySubscription($email: String!) {
@@ -55,6 +56,7 @@ const actions = {
     if (hasuraJwt) {
       commit('setHasuraJwt', hasuraJwt);
     }
+    window.location.reload();
   },
   logout({ commit }) {
     commit('logout');
@@ -75,8 +77,14 @@ const mutations = {
     _state.hasuraJwt = hasuraJwt;
   },
   logout(_state) {
+    console.log('logout');
     // eslint-disable-next-line no-param-reassign
-    delete _state.jwt;
+    _state.jwt = null;
+    // eslint-disable-next-line no-param-reassign
+    _state.hasuraJwt = null;
+    // eslint-disable-next-line no-param-reassign
+    _state.data.score = null;
+    window.location.reload();
   },
 };
 
