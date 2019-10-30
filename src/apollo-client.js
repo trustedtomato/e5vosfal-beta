@@ -24,7 +24,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://e5vosfal-graphql.herokuapp.com/v1/graphql',
+  uri: 'wss://e5vosfal-graphql.herokuapp.com/v1/graphql',
   options: {
     reconnect: true,
     connectionParams: () => {
